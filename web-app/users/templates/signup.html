@@ -1,0 +1,26 @@
+<!-- templates/signup.html -->
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="row my-5 pt-5" style="padding: 0px 10px; margin: 0px 20px;">
+    <h1 class="display-4">SignUp</h1>
+</div>
+
+<div class="row my-5" style="padding: 0px 10px; margin: 0px 20px;">
+    <div class="col-sm-12">
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                <!-- {{ form.as_p }} -->
+                {% include 'form.html' with form=form %}
+
+                <button type="submit" class="btn btn-primary mx-3" style = "background: #430502;border:none;" >Sign up</button>
+                <a class="btn btn-secondary mx-3" href="{% url 'home' %}" role="button" style="background: #ffd916;border:none;">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

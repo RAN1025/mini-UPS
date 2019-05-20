@@ -1,0 +1,81 @@
+Differentiation Features
+
+
+Security
+
+1. Sign Up Check 
+In sign up process, the format of email, password, user id and user name are checked. The email should have correct format.
+The password cannot be too similar to other personal information; must contain at least 8 characters; cannot be commonly used password;
+cannot be entirely numeric. The user id should be integer and at least 1. The user name should be 150 character or fewer and only
+contain digits and @,.,+,-,_.
+
+2. Profile Edit Limit
+Users can change their profile. The email address and user name of one user can be changed while the user id cannot be changed after created.
+Only registered users can access profile page.
+
+3. Package Track Mechanism
+After registration in UPS, when users buy a package at Amazon, if they provide their UPS user id, they can see their packages on
+their personal package pages in UPS website. If they do not provide their UPS user id, the packages would be treat as belonging to nobody,
+and would not be shown on the personal package pages. Users can only find these package by ‘quick track’ function.
+
+4. Destination Edit Limit
+Only the package owner can edit the destination of the packages. Users cannot change the destination of others’ packages.
+And users can only change the destination when the packages are not out for delivery.
+
+
+Scalability
+
+1. Multiple Thread
+In the server program, there are four threads. One thread works for World; one thread works for Amazon; one thread checks the
+ack for every message and realizes the resend function; one thread checks the status and current locations of non-idle trucks.
+And in the World thread, the program would create new sub threads for every message received from world and process the message
+independently; the same, in the Amazon thread, the program would create new sub threads for every message received Amazon.
+This design makes the program easy to understand and also improves the ability for the server to handle multiple concurrent requests.
+
+2. Database Support
+We designed six tables in the database: users_customuser, package_package, truck, usend, arecv, wrecv. All the information about users,
+packages and trucks are stored in the database. And the sequence numbers from Amazon and World are stored. When server receives new
+message from Amazon or World, it would check the sequence numbers table to determine whether the message has been processed before.
+And all the messages sent by UPS are stored in the usend table. The messages would be deleted when we receive the corresponding ACK;
+otherwise, we will resend the messages after a period a time. We use database to store the messages instead of the memory. In this way,
+we can handle a lot amount of stranded messages with good performance. 
+
+3. Truck Selection 
+When UPS need to select trucks. The program would choose the idle trucks firstly. If there is no idle trucks, the program would choose
+the truck which has the ‘delivering’ status and with the least amount of packages on the truck. If there is no truck available (which has
+low probability), the server would ignore the request and process it later. This selection mechanism guarantees the work efficiency
+and functionality.
+
+
+Functionality
+
+1. Package ID Set
+The ‘tracking number’ in UPS is set as the same as the ‘package id’ sent from the Amazon side. This setting guarantees the uniqueness
+of ID and simplify the program.
+
+2. Current Status Display
+The status of package would be updated timely. This function is friendly for users.
+
+3. Current Address Display
+Based on the query function to world, the current status and current position of truck could be detected. The website would display the
+current position of package after it leaves warehouse. 
+
+4. Package Detail Display
+The website would display the details of all packages, including the item names and corresponding amount. 
+
+5. Email notification
+When the package is delivered, the server would send email to users to notify them.
+
+6. History List
+If the users go to their personal package page, they can also see their previous packages information. 
+
+7. Truck Number Set
+The program can support any number of trucks. All the numbers of trucks could be handled.
+
+8. Comment
+After login, users can evaluate UPS services and make comments by licking the button on the right corner. Users can also see others comments.
+In this way, the UPS company can get feedback from users to improve the service.
+
+9. Docker
+To make a convenient start of the project, we put both front end and back end of the project in docker, so that the project can be started
+by a single command "docker-compose up".

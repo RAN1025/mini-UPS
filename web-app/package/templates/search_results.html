@@ -1,0 +1,86 @@
+{% extends 'basic.html' %}
+{% block title %}Search Result{% endblock %}
+
+{% block content %}
+
+    <div class="bg-light mt-5 text-white">
+        <div class="my-3 pt-5" style="background-image: url('http://www.operasb.com.au/images/maps/jndsd75zo2.png');">
+            <div sytle="height:120px;"></div>
+            <div class="row mx-5 pt-5">
+                <h1 class="display-4">Search Results</h1>
+            </div>
+            <div style="height:120px;"></div>
+        </div>
+    </div>
+
+<div class="row mx-5">
+    <div class="col-8">
+
+        <div class="card">
+            {% if results %}
+                <div class="accordion" id="accordionExample">
+                {% for package in results %}
+                    <div class="card">
+                        <div class="card-header" id="{{ package.package_id }}">
+                            <h2 class="mb-1">
+                                <button class="btn btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapse{{ package.package_id }}" aria-expanded="true" aria-controls="collapse{{ package.package_id }}">
+                                    <div class="row">
+                                        <div class="d-flex mt-1 mb-3 w-100 justify-content-between">
+                                            <h3 class="mb-1"> Tracking Number: {{ package.package_id }}</h3>
+                                            <h3 class="text-muted text-right">Status: {{ package.status }}</h3>
+                                        </div>
+                                    </div>
+                                </button>
+                            </h2>
+                        </div>
+
+                    {% if package == results|first %}
+                        <div id="collapse{{ package.package_id }}" class="collapse show" aria-labelledby="{{ package.package_id }}" data-parent="#accordionExample">
+                    {% else %}
+                        <div id="collapse{{ package.package_id }}" class="collapse" aria-labelledby="{{ package.package_id }}" data-parent="#accordionExample">
+                    {% endif %}
+
+                <div class="card-body">
+                    <p class="h4 my-2 text-muted">Delivery Address</p>
+                    <p class="h5 mt-1 mb-3">( {{ package.x}} , {{ package.y}} )</p>
+
+                    <p class="h4 my-2 text-muted">Current Address</p>
+                    {% if package.status == 'created' or package.status == 'truck en-route to warehouse' or package.status == 'loading' %}
+		        <p class="h5 mt-1 mb-3">in warehouse</p>
+		    {% elif package.status ==  'out for delivery' %}
+			{% if not package.curr_x %}
+                            <p class="h5 mt-1 mb-3">will update soon</p>
+                        {% else %}
+		            <p class="h5 mt-1 mb-3">( {{ package.curr_x }} , {{ package.curr_y }} )</p>
+			{% endif %}
+		    {% else %}
+                        <p class="h5 mt-1 mb-3">( {{ package.x }} , {{ package.y }} )</p>
+                    {% endif %}
+
+                    <p class="h4 mt-3 mb-2 text-muted">Items</p>
+                    <p class="h5 mt-1 mb-3">{{ package.items }} </p>
+
+                    <p class="h4 mt-3 mb-2 text-muted">Amount</p>
+                    <p class="h5 mt-1 mb-3">{{ package.amount }}</p>
+                </div>
+
+                </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                <div class="card ml-5">
+                    <div class="card-body">
+                        <p class="h5 text-muted mx-5">No Results</p>
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+

@@ -1,0 +1,83 @@
+{% load static %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background: #430502">
+    <a class="navbar-brand" style="color: white"> UPS </a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+
+            </li>
+        </ul>
+        {% if user.is_authenticated %}
+        <a class="btn btn btn-outline-light mx-2 my-2 my-sm-0" href="{% url 'package:comment' %}" role="button" style="color:#FFFAF0">Comment</a>
+        <a class="btn btn btn-outline-success mx-2 my-2 my-sm-0" href="{% url 'profile'%}" role="button" style="color:#008000">Profile</a>
+	<a class="btn btn btn-outline-warning mx-2 my-2 my-sm-0" href="{% url 'logout' %}" role="button" style="color:#ffd916">Logout</a>
+	{% endif %}
+    </div>
+</nav>
+
+
+{% block content %}
+{% endblock %}
+
+
+<!-- FOOTER -->
+<div class="my-5" style="height: 100px;"></div>
+<footer class="mt-5">
+    <div class="container-fluid text-white mt-5" style="background: #430502">
+        <div class="container">
+            <div class="row py-3">
+                <div class="col-md-4">
+                    <div class="row py-2">
+                        <div class="col-sm-9">
+                            <h4>UPS</h4>
+                            Search and Track Package
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row py-2">
+                        <div class="col-sm-9">
+                            <h4>Yihao Hu</h4>
+                            <p>ECE Master, Duke University</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row py-2">
+                        <div class="col-sm-9">
+                            <h4>Ran Gu</h4>
+                            <p>ECE Master, Duke University</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid py-3" style="background:#D3D3D3">
+        <div class="container">
+            <div class="row py-3">
+                <div class="col-md-9">
+                    <h6 class="text-white" style="opacity: 0.7;">Project for ECE 568 Robust Server Software Engineering.</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

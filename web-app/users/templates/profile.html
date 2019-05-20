@@ -1,0 +1,43 @@
+<!-- templates/signup.html -->
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<div class="container my-5 py-5 pr-5" style="padding: 0px 10px;">
+  <div class="row">
+    <h1 class="display-4">Profile</h1>
+  </div>
+    <div class="row mr-2 mt-2">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">Edit your profile</h4>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <p>Hey There! You can change your user name, email address and password. </p>
+        </div>
+    </div>
+
+
+
+  
+
+<div class="row my-5 mr-2">
+  <div class="col-sm-12">
+    <div>
+      <form method="post">
+        {% csrf_token %}
+        <!-- {{ form.as_p }} -->
+        {% include 'form.html' with form=form %}
+
+        <button type="submit" class="btn btn-primary mx-3" style = "background: #430502;border:none;">Save</button>
+        <a class="btn btn-secondary mx-3" href="{% url 'home' %}" role="button" style="background: #ffd916;border:none;">Back</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+</div>
+
+{% endblock %}

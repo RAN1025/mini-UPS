@@ -1,0 +1,48 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="row my-5 pt-5" style="padding: 20px 10px; margin: 0px 20px;">
+        {% if user.is_authenticated %}
+            <h1 class="display-4">Hi {{ user.username }}!</h1>
+        {% else %}
+            <h1 class="display-4">Welcome!</h1>
+        {% endif %}
+    </div>
+
+    <div class="row my-5" style="padding: 0px 10px; margin: 0px 20px;">
+        {% if user.is_authenticated %}
+            <div class="col">
+                <div class="row mr-5" style="box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 9px 26px 0 rgba(0,0,0,0.19);">
+                    <div class="col-md-6" style="background: #430502;">
+                        <div class="card border-0" style="background: #430502;">
+                            <img class="mt-5" style="width: 96px;height: 96px;margin: 10px auto 10px;display: block;border-radius: 50%; background: #430502;" src="https://s2.ax1x.com/2019/01/29/kMqWcR.png" />
+                            <a class="btn btn-outline-light my-5" href="{% url 'package:index' %}" role="button">Personal Package Info</a>
+                        </div><!-- /card-container -->
+                    </div>
+                    <div class="col-md-6" style="background: #ffd916;">
+                        <div class="card border-0" style="background: #ffd916;">
+                            <img class="mt-5" style="width: 96px;height: 96px;margin: 10px auto 10px;display: block;border-radius: 50%; background: #ffd916;" src="https://s2.ax1x.com/2019/01/29/kMqUpj.png" />
+                            <a class="btn btn-outline-light my-5" href="{% url 'package:search' %}" role="button">Search for Package</a>
+                        </div><!-- /card-container -->
+                    </div>
+                </div>
+            <div class="row my-5 mr-5">
+                <a class="btn btn-secondary btn-block" href="{% url 'logout' %}" role="button"  style = "background:#430502;">Logout</a>
+            </div>
+        </div>
+
+        {% else %}
+            <a class="btn btn-primary mx-3" href="{% url 'login' %}" style = "background:#430502;border:none;" role="button">Login</a>
+            <a class="btn btn-secondary mx-3" href="{% url 'signup' %}" role ="button" style="background: #ffd916;border:none;">Signup</a>
+            <a class="btn btn-success mx-3" href="{% url 'package:search'  %}" role = "button" style="background:#008000;border:none;">Quick Track</a>
+
+            <div class="row my-5" style="padding: 0px 10px; margin: 0px 20px;">
+            <img src="{% static 'picture1.jpg' %}" height="98%" width="98%" alt="UPS" />
+            </div>
+
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+#Danger Log
+
+- 4.11: Users who have not logged in should not be able to access package index/profile page
+
+- 4.12: The 'logout' and 'profile' buttons should only display for registed users.
+
+- 4.13: The 'user ID' should not be negative numbers.
+
+- 4.13: The 'change address' should only display for non-delivering package
+
+- 4.13: Users cannot change the destination of others’ packages
+
+- 4.14: When receiving any message, we should check whether the seqnum exists in the arecv or wrecv table. If the seqnum exists,
+  	we need to send ack and ignore the message; If the seqnum does not exist, the seqnum should be added to the 'arecv' or 'wrecv' table,
+	and the message should be processed.
+
+- 4.14: All the messages sent by UPS should be stored in the 'usend' table, and delete them once corresponding ACK is received
+
+- 4.15: Due to the potential flakiness, need to develop a mechanism that checks unreceived ACK from usend table, and resend those messages
+
+- 4.16: Trucks that have arrived at warehouse and waiting for packages to load must not leave the warehouse until the package is loaded,
+  	otherwise serious logistic problem could arise on both UPS and Amazon side
+
+- 4.16: Might run into a situation where all trucks are in loading status, and meanwhile an order comes in and needs to be picked up.
+  	In this case, if no truck is available to pick up the order immediately, UPS ignores the order. UPS keep ignoring orders until there
+	are trucks available (trucks in status 'delivering' or 'idle' can pick up) again.
+
+- 4.17: Since UPS process messages from Amazon and World in a parallel (multithread) manner, need to add lock for sockets (send, recv), database,
+  	and seqnum (seqnum is unique globally, meaning messages sent to Amazon and World are under same seqnum system)
+
+- 4.18: The correct logistic for Amazon and UPS to work together is the following: World comes online first, then Amazon goes online and wait for UPS connection.
+  	Finally, UPS goes online and connect to World first to get world id. After getting the world id, UPS connects to Amazon as well as sends out
+	the world id to Amazon. In the end, Amazon use the world id to connect to the world.
+
+- 4.19: Amazon might send invalid UPS User ID. When an User ID cannot be found in the database, do not map this package to any account.
+
+- 4.20: Maintain message-ACK communication mechanism between UPS and Amazon even though we are assuming there should not be any packet loss. Not only it is
+  	a good practice, but also help out in the case when no truck is available for pickup (mentioned previously).
+
+- 4.21: The check on packet drop (flakiness) should happen fairly frequently, otherwise the whole process can get really slow.
+
+- 4.22: If receive duplicate seqnum, process the first and ignore the later.

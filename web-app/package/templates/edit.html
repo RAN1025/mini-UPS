@@ -1,0 +1,21 @@
+{% extends 'basic.html' %}
+{% block title %}Edit address{% endblock %}
+
+{% block content %}
+    <div class="bg-light mt-5 text-white">
+        <div class="my-3 pt-5" style="background-image: url('http://www.operasb.com.au/images/maps/jndsd75zo2.png');">
+            <div sytle="height:120px;"></div>
+            <div class="row mx-5 pt-5">
+                <h1 class="display-4">Edit Address</h1>
+            </div>
+            <div style="height:120px;"></div>
+        </div>
+    </div>
+
+    <form method="post" class="post-form mx-5 my-5 px-5">
+        {% csrf_token %}
+        {% include 'form.html' with form=form %}
+        <input type="submit" value="Submit" class="btn btn-primary mt-5" style="background: #ffd916;border:none;"/>
+    </form>
+
+{% endblock %}

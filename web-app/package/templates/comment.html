@@ -1,0 +1,81 @@
+{% extends 'basic.html' %}
+{% block title %}comment{% endblock %}
+
+{% block content %}
+
+    <div class="bg-light mt-5 text-white">
+        <div class="my-3 pt-5" style="background-image: url('http://www.operasb.com.au/images/maps/jndsd75zo2.png');">
+            <div sytle="height:120px;"></div>
+            <div class="row mx-5 pt-5">
+                <h1 class="display-4">Comments</h1>
+            </div>
+            <div class="row mx-5 mt-2 pt-5">
+                <h5 class="lead">Hi {{ user.username }}!<br/>View and Provide your Comments Here.</h5>
+            </div>
+            <div style="height:120px;"></div>
+        </div>
+    </div>
+
+    <div class="row my-5">
+        <div class="col-8">
+            <div class="row">
+                <div class="col-6 ml-5">
+                  <p class="display-4 ml-3">All Comments
+		    <a class="btn btn-outline-warning btn-sm" href="{% url 'package:addcomment' %}" role="button">Add Comment</a>
+		  </p>
+                </div>
+            </div>
+
+            <div class="row ml-5">
+                <div class="col-11">
+
+                    <div class="card">
+                        {% if latest_question_list %}
+                            <div class="accordion" id="accordionExample">
+                            {% for comment in latest_question_list %}
+                                <div class="card">
+                                <div class="card-header" id="{{ comment.owner }}">
+                                    <h2 class="mb-1">
+                                        <button class="btn btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapse{{ comment.owner }}"
+                                                aria-expanded="true" aria-controls="collapse{{ comment.owner}}">
+                                            <div class="row">
+                                                <div class="d-flex mt-1 mb-3 w-100 justify-content-between">
+                                                    <h3 class="mb-1"> User name: {{ comment.owner }}</h3>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                </div>
+
+                                {% if comment == latest_question_list|first %}
+                                    <div id="collapse{{ comment.owner }}" class="collapse show" aria-labelledby="{{ comment.owner }}" data-parent="#accordionExample">
+                                {% else %}
+                                    <div id="collapse{{ comment.owner }}" class="collapse" aria-labelledby="{{ comment.owner }}" data-parent="#accordionExample">
+                                {% endif %}
+
+                            <div class="card-body">
+                                <p class="h4 my-2 text-muted">Comment: </p>
+                                <p class="h5 mt-1 mb-3">{{ comment.context }} </p>
+                            </div>
+
+                            </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        {% else %}
+                            <div class="card ml-5">
+                                <div class="card-body">
+                                    <p class="h5 text-muted mx-5">No Comment Now</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
